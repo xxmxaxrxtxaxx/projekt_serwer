@@ -52,6 +52,12 @@ namespace Lab1
            
             return (byte)numerModulacji;
         }
+        private void odswiez_hex()
+        {
+            byte[] bytes = Encoding.ASCII.GetBytes(nadaj_asci.Text);
+            byte[] ramka = makeFrame(tryb(), bytes).ToArray();
+            nadaj_hex.Text = BitConverter.ToString(ramka);
+        }
   //     strona w dokumentacji 26 
         private byte tryb()
         {
@@ -89,64 +95,25 @@ namespace Lab1
             return listaDanych;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+    
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void polaczenie_box_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-
+  
+ 
         private void fec_btn_CheckedChanged(object sender, EventArgs e)
         {
-
+            odswiez_hex();
         }
 
         private void nadaj_asci_TextChanged(object sender, EventArgs e)
         {
-            byte[] bytes = Encoding.ASCII.GetBytes(nadaj_asci.Text);
-            byte [] ramka = makeFrame(tryb(),bytes).ToArray();
-            nadaj_hex.Text = BitConverter.ToString(ramka);
-           
-            //usunięcie myślników (.Replace("-","");
+            odswiez_hex();
+
         }
 
         private void otworzCom_Click(object sender, EventArgs e)
@@ -188,7 +155,7 @@ namespace Lab1
             }
         }
 
-        private void zamknijCOM_btn(object sender, EventArgs e)
+        private void zamknijCOM_btn_Click(object sender, EventArgs e)
         {
             if (_port != null)
             {
@@ -197,16 +164,41 @@ namespace Lab1
             }
         }
 
-        private void wyczysc_btn(object sender, EventArgs e)
+        private void wyczysc_btn_Click(object sender, EventArgs e)
         {
             nadaj_asci.Text = "";
             nadaj_hex.Text = "";
             odbior.Text = "";
         }
 
-        private void reset_btn(object sender, EventArgs e)
+        private void reset_btn_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void phy_btn_CheckedChanged(object sender, EventArgs e)
+        {
+            odswiez_hex();
+        }
+
+        private void dl_btn_CheckedChanged(object sender, EventArgs e)
+        {
+            odswiez_hex();
+        }
+
+        private void b_psk_btn_CheckedChanged(object sender, EventArgs e)
+        {
+            odswiez_hex();
+        }
+
+        private void q_psk_btn_CheckedChanged(object sender, EventArgs e)
+        {
+            odswiez_hex();
+        }
+
+        private void psk_8_btn_CheckedChanged(object sender, EventArgs e)
+        {
+            odswiez_hex();
         }
     }
 }

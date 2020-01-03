@@ -78,7 +78,7 @@
             this.reset_btn.TabIndex = 1;
             this.reset_btn.Text = "Zresetuj";
             this.reset_btn.UseVisualStyleBackColor = true;
-            this.reset_btn.Click += new System.EventHandler(this.reset_btn);
+            this.reset_btn.Click += new System.EventHandler(this.reset_btn_Click);
             // 
             // zamknijCOM_btn
             // 
@@ -89,7 +89,7 @@
             this.zamknijCOM_btn.TabIndex = 2;
             this.zamknijCOM_btn.Text = "Zamknij COM";
             this.zamknijCOM_btn.UseVisualStyleBackColor = true;
-            this.zamknijCOM_btn.Click += new System.EventHandler(this.zamknijCOM_btn);
+            this.zamknijCOM_btn.Click += new System.EventHandler(this.zamknijCOM_btn_Click);
             // 
             // portyCOM
             // 
@@ -110,7 +110,6 @@
             this.label1.Size = new System.Drawing.Size(158, 25);
             this.label1.TabIndex = 5;
             this.label1.Text = "Dostępne porty";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // fec_btn
             // 
@@ -133,7 +132,6 @@
             this.label2.Size = new System.Drawing.Size(158, 25);
             this.label2.TabIndex = 8;
             this.label2.Text = "Typ połączenia";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // phy_btn
             // 
@@ -146,6 +144,7 @@
             this.phy_btn.TabStop = true;
             this.phy_btn.Text = "PHY";
             this.phy_btn.UseVisualStyleBackColor = true;
+            this.phy_btn.CheckedChanged += new System.EventHandler(this.phy_btn_CheckedChanged);
             // 
             // label3
             // 
@@ -156,7 +155,6 @@
             this.label3.Size = new System.Drawing.Size(111, 25);
             this.label3.TabIndex = 10;
             this.label3.Text = "Modulacja";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // b_psk_btn
             // 
@@ -169,7 +167,7 @@
             this.b_psk_btn.TabStop = true;
             this.b_psk_btn.Text = "B-PSK";
             this.b_psk_btn.UseVisualStyleBackColor = true;
-            this.b_psk_btn.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            this.b_psk_btn.CheckedChanged += new System.EventHandler(this.b_psk_btn_CheckedChanged);
             // 
             // q_psk_btn
             // 
@@ -182,6 +180,7 @@
             this.q_psk_btn.TabStop = true;
             this.q_psk_btn.Text = "Q-PSK";
             this.q_psk_btn.UseVisualStyleBackColor = true;
+            this.q_psk_btn.CheckedChanged += new System.EventHandler(this.q_psk_btn_CheckedChanged);
             // 
             // psk_8_btn
             // 
@@ -194,6 +193,7 @@
             this.psk_8_btn.TabStop = true;
             this.psk_8_btn.Text = "8-PSK";
             this.psk_8_btn.UseVisualStyleBackColor = true;
+            this.psk_8_btn.CheckedChanged += new System.EventHandler(this.psk_8_btn_CheckedChanged);
             // 
             // label4
             // 
@@ -252,7 +252,7 @@
             this.dl_btn.TabStop = true;
             this.dl_btn.Text = "DL";
             this.dl_btn.UseVisualStyleBackColor = true;
-            this.dl_btn.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.dl_btn.CheckedChanged += new System.EventHandler(this.dl_btn_CheckedChanged);
             // 
             // polaczenie_box
             // 
@@ -263,7 +263,6 @@
             this.polaczenie_box.Size = new System.Drawing.Size(293, 53);
             this.polaczenie_box.TabIndex = 20;
             this.polaczenie_box.TabStop = false;
-            this.polaczenie_box.Enter += new System.EventHandler(this.polaczenie_box_Enter);
             // 
             // clear_btn
             // 
@@ -274,7 +273,7 @@
             this.clear_btn.TabIndex = 21;
             this.clear_btn.Text = "Wyczyść";
             this.clear_btn.UseVisualStyleBackColor = true;
-            this.clear_btn.Click += new System.EventHandler(this.wyczysc_btn);
+            this.clear_btn.Click += new System.EventHandler(this.wyczysc_btn_Click);
             // 
             // ascii_text
             // 
