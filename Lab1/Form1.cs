@@ -13,17 +13,17 @@ namespace Lab1
 {
     public partial class Form1 : Form
     {
+        private SerialPort _port;
         public Form1()
         {
             InitializeComponent();
 
+
             b_psk_btn.Checked = true;
             dl_btn.Checked = true;
-            comboBox1.Items.Clear();
+            portyCOM.Items.Clear();
             String[] porty = SerialPort.GetPortNames();
-            
-            foreach (String x in porty)           
-                comboBox1.Items.AddRange(porty);
+            portyCOM.Items.AddRange(porty);
 
         }
        
@@ -89,9 +89,6 @@ namespace Lab1
             return listaDanych;
         }
 
-        
- 
-
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -137,12 +134,6 @@ namespace Lab1
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            nadaj_hex.Clear();
-            nadaj_asci.Clear();
-            odbior.Clear();
-        }
 
         private void fec_btn_CheckedChanged(object sender, EventArgs e)
         {
@@ -154,18 +145,68 @@ namespace Lab1
             byte[] bytes = Encoding.ASCII.GetBytes(nadaj_asci.Text);
             byte [] ramka = makeFrame(tryb(),bytes).ToArray();
             nadaj_hex.Text = BitConverter.ToString(ramka);
-
+           
             //usunięcie myślników (.Replace("-","");
         }
 
         private void otworzCom_Click(object sender, EventArgs e)
         {
+            if (_port != null)
+            {
+                return;
+            }
 
+            string wybranyPort = portyCOM.Text;
+
+
+            if (!string.IsNullOrWhiteSpace(wybranyPort))
+            {
+                _port = new SerialPort(wybranyPort);
+                _port.Open();
+            }
+      
         }
 
         private void wyslij_btn_Click(object sender, EventArgs e)
         {
-           
+            string wyslany_tekst = nadaj_hex.Text;
+            if (_port != null)
+            {
+                if (!string.IsNullOrWhiteSpace(wyslany_tekst))
+                {
+                    string[] bajty_do_wyslania= wyslany_tekst.Split('-');
+                    List<byte> lista = new List<byte>();
+                    foreach ( var bajt in bajty_do_wyslania)
+                    {
+                        lista.Add(byte.Parse(bajt, System.Globalization.NumberStyles.HexNumber));
+                    }
+                    _port.Write(lista.ToArray(), 0, lista.Count);
+                        
+
+
+                }
+            }
+        }
+
+        private void zamknijCOM_btn(object sender, EventArgs e)
+        {
+            if (_port != null)
+            {
+                _port.Close();
+                _port = null;
+            }
+        }
+
+        private void wyczysc_btn(object sender, EventArgs e)
+        {
+            nadaj_asci.Text = "";
+            nadaj_hex.Text = "";
+            odbior.Text = "";
+        }
+
+        private void reset_btn(object sender, EventArgs e)
+        {
+
         }
     }
 }
