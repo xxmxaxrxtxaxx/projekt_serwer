@@ -14,6 +14,9 @@ namespace Lab1
     public partial class Form1 : Form
     {
         private SerialPort _port;
+
+        public event EventHandler<string> OdczytanoDane;
+
         public Form1()
         {
             InitializeComponent();
@@ -25,8 +28,19 @@ namespace Lab1
             String[] porty = SerialPort.GetPortNames();
             portyCOM.Items.AddRange(porty);
 
+            OdczytanoDane += OdczytanoDane_handler;
         }
-       
+
+        private void OdczytanoDane_handler(object sender, string text)
+        {
+            var forma = (Form1)sender;
+            forma.ZapiszOdcztyanyTekst(text);
+        }
+        public void ZapiszOdcztyanyTekst(string text)
+        {
+            odbior.Text += text;
+        }
+
         private byte modulacja()
         {
             int numerModulacji = 0;
@@ -54,8 +68,11 @@ namespace Lab1
         }
         private void odswiez_hex()
         {
-            byte[] bytes = Encoding.ASCII.GetBytes(nadaj_asci.Text);
-            byte[] ramka = makeFrame(tryb(), bytes).ToArray();
+            List<byte> bytes = new List<byte>();
+            bytes.Add(modulacja());
+            bytes.AddRange(Encoding.ASCII.GetBytes(nadaj_asci.Text));
+   
+            byte[] ramka = makeFrame(tryb(), bytes.ToArray()).ToArray();
             nadaj_hex.Text = BitConverter.ToString(ramka);
         }
   //     strona w dokumentacji 26 
@@ -130,8 +147,23 @@ namespace Lab1
             {
                 _port = new SerialPort(wybranyPort);
                 _port.Open();
+                _port.DataReceived += _port_DataReceived;
             }
       
+        }
+
+        private void _port_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            var comPort = (SerialPort)sender;
+            while (comPort.BytesToRead > 0)
+            {
+                 string text = comPort.ReadExisting();
+                if(OdczytanoDane != null)
+                {
+                    OdczytanoDane(this, text);
+                }
+            }          
+           
         }
 
         private void wyslij_btn_Click(object sender, EventArgs e)
@@ -160,6 +192,7 @@ namespace Lab1
             if (_port != null)
             {
                 _port.Close();
+                _port.DataReceived -= _port_DataReceived;
                 _port = null;
             }
         }
