@@ -15,7 +15,6 @@ namespace Lab1
     {
         private SerialPort _port;
 
-        public event EventHandler<string> OdczytanoDane;
 
         public Form1()
         {
@@ -28,18 +27,17 @@ namespace Lab1
             String[] porty = SerialPort.GetPortNames();
             portyCOM.Items.AddRange(porty);
 
-            OdczytanoDane += OdczytanoDane_handler;
         }
 
-        private void OdczytanoDane_handler(object sender, string text)
+        private void OdczytanoDane(object sender, string text)
         {
-            var forma = (Form1)sender;
-            forma.ZapiszOdcztyanyTekst(text);
-        }
-        public void ZapiszOdcztyanyTekst(string text)
-        {
+            if (this.InvokeRequired)//zabezpieczenie przed wywołaniem metody innego wątku
+            {
+                this.BeginInvoke(new EventHandler<string>(OdczytanoDane), new object[] { sender, text });
+                return;
+            }
             odbior.Text += text;
-        }
+        }       
 
         private byte modulacja()
         {
@@ -157,13 +155,9 @@ namespace Lab1
             var comPort = (SerialPort)sender;
             while (comPort.BytesToRead > 0)
             {
-                 string text = comPort.ReadExisting();
-                if(OdczytanoDane != null)
-                {
-                    OdczytanoDane(this, text);
-                }
-            }          
-           
+                string text = comPort.ReadExisting();
+                OdczytanoDane(this, text);                
+            }
         }
 
         private void wyslij_btn_Click(object sender, EventArgs e)
